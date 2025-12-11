@@ -4,6 +4,7 @@ import br.com.aroldofe.servico_remessa.api.bo.ContaBO;
 import br.com.aroldofe.servico_remessa.api.mapper.ContaMapper;
 import br.com.aroldofe.servico_remessa.api.request.CreateContaRequest;
 import br.com.aroldofe.servico_remessa.api.response.ContaResponse;
+import br.com.aroldofe.servico_remessa.enums.TipoSaldoConta;
 import br.com.aroldofe.servico_remessa.service.ContaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class ContaRestController {
         final var contaBO = ContaBO.builder()
                 .usuarioId(request.getUsuarioId())
                 .numeroConta(request.getNumeroConta())
-                .tipoSaldoConta(request.getTipoSaldoConta())
+                .tipoSaldoConta(TipoSaldoConta.valueOf(request.getTipoSaldoConta()))
                 .build();
         final var conta = service.create(contaBO);
 
