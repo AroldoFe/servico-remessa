@@ -26,8 +26,6 @@ class UsuarioRestControllerContractTest extends AbstractContractTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private final UsuarioMapper usuarioMapper = new UsuarioMapper();
-
     // Testes para validação de nome
     @Test
     @SneakyThrows
@@ -277,9 +275,9 @@ class UsuarioRestControllerContractTest extends AbstractContractTest {
                 .cpfCnpj("111.111.111-11")
                 .build();
 
-        Mockito.doReturn(usuarioMapper.toBO(requestBody))
+        Mockito.doReturn(UsuarioMapper.toBO(requestBody))
                 .when(usuarioService)
-                .criarUsuario(Mockito.any(UsuarioBO.class));
+                .create(Mockito.any(UsuarioBO.class));
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/usuarios")
@@ -287,22 +285,6 @@ class UsuarioRestControllerContractTest extends AbstractContractTest {
                         .content(objectMapper.writeValueAsString(requestBody))
         ).andExpect(status().isCreated());
     }
-
- /*   @Test
-    @SneakyThrows
-    void shouldReturn_Ok_When_requestIsValidWithCpf_unformatted() {
-        final var requestBody = CreateUsuarioRequest.builder()
-                .nome("João Silva")
-                .email("teste@teste.com")
-                .cpfCnpj("11111111111")
-                .build();
-
-        mockMvc.perform(
-                MockMvcRequestBuilders.post("/usuarios")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(requestBody))
-        ).andExpect(status().isOk());
-    }*/
 
     @Test
     @SneakyThrows
@@ -313,9 +295,9 @@ class UsuarioRestControllerContractTest extends AbstractContractTest {
                 .cpfCnpj("11.111.111/1111-11")
                 .build();
 
-        Mockito.doReturn(usuarioMapper.toBO(requestBody))
+        Mockito.doReturn(UsuarioMapper.toBO(requestBody))
                 .when(usuarioService)
-                .criarUsuario(Mockito.any(UsuarioBO.class));
+                .create(Mockito.any(UsuarioBO.class));
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/usuarios")
@@ -323,21 +305,5 @@ class UsuarioRestControllerContractTest extends AbstractContractTest {
                         .content(objectMapper.writeValueAsString(requestBody))
         ).andExpect(status().isCreated());
     }
-
-    /*@Test
-    @SneakyThrows
-    void shouldReturn_Ok_When_requestIsValidWithCnpj_unformatted() {
-        final var requestBody = CreateUsuarioRequest.builder()
-                .nome("Empresa LTDA")
-                .email("empresa@teste.com")
-                .cpfCnpj("11111111111111")
-                .build();
-
-        mockMvc.perform(
-                MockMvcRequestBuilders.post("/usuarios")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(requestBody))
-        ).andExpect(status().isOk());
-    }*/
 }
 
