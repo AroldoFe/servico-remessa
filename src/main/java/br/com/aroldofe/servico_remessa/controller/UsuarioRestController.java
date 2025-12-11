@@ -20,14 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class UsuarioRestController {
     private final UsuarioService service;
-    private final UsuarioMapper mapper = new UsuarioMapper();
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UsuarioResponse criar(
+    public UsuarioResponse create(
             @RequestBody @Valid CreateUsuarioRequest request
     ) {
-        final var usuario = service.criarUsuario(mapper.toBO(request));
-        return mapper.toResponse(usuario);
+        final var usuario = service.create(UsuarioMapper.toBO(request));
+        return UsuarioMapper.toResponse(usuario);
     }
 }
