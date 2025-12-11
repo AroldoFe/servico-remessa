@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class Conta {
     @Id
     @GeneratedValue
@@ -36,7 +36,7 @@ public class Conta {
     @Column(nullable = false, unique = true)
     private String numeroConta;
 
-    @Column(name = "tipo_saldo_conta", nullable = false)
+    @Column(nullable = false)
     private TipoSaldoConta tipoSaldoConta;
 
     @Column(nullable = false)
