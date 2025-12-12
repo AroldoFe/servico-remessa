@@ -31,7 +31,7 @@ public class ContaServiceImpl implements ContaService {
     @Transactional
     public ContaBO create(ContaBO contaBO) {
         final var usuario = this.usuarioRepository.findById(contaBO.getUsuarioId())
-                .orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
+                .orElseThrow(() -> new NotFoundException("Usuário não encontrado."));
 
         final var existsContaWithTipoSaldoConta = this.repository.exists(
                 hasTipoSaldoConta(contaBO.getTipoSaldoConta())
@@ -39,7 +39,7 @@ public class ContaServiceImpl implements ContaService {
         );
 
         if (existsContaWithTipoSaldoConta) {
-            throw new ContaAlreadyExistsException("Já existe uma conta para este tipo de saldo e usuário");
+            throw new ContaAlreadyExistsException("Já existe uma conta para este tipo de saldo e usuário.");
         }
 
         final var existsContaWithNumeroConta = this.repository.exists(hasNumeroConta(contaBO.getNumeroConta()));

@@ -50,7 +50,7 @@ class ContaServiceImplTest {
 
         final var exception = assertThrows(RuntimeException.class, () -> service.create(contaBO));
 
-        assertEquals("Usuário não encontrado", exception.getMessage());
+        assertEquals("Usuário não encontrado.", exception.getMessage());
     }
 
     @Test
@@ -76,7 +76,7 @@ class ContaServiceImplTest {
 
         final var exception = assertThrows(RuntimeException.class, () -> service.create(contaBO));
 
-        assertEquals("Já existe uma conta para este tipo de saldo e usuário", exception.getMessage());
+        assertEquals("Já existe uma conta para este tipo de saldo e usuário.", exception.getMessage());
     }
 
     @Test
@@ -100,7 +100,7 @@ class ContaServiceImplTest {
                 .thenReturn(false, true);
 
         final var exception = assertThrows(RuntimeException.class, () -> service.create(contaBO));
-        assertEquals("Já existe uma conta com este número", exception.getMessage());
+        assertEquals("Já existe uma conta com este número.", exception.getMessage());
     }
 
     @Test
