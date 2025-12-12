@@ -17,6 +17,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static br.com.aroldofe.servico_remessa.repository.specification.ContaSpecification.hasNumeroConta;
+import static br.com.aroldofe.servico_remessa.repository.specification.ContaSpecification.hasTipoSaldoConta;
+import static br.com.aroldofe.servico_remessa.repository.specification.ContaSpecification.hasUsuarioId;
 
 @RequiredArgsConstructor
 @Service
@@ -31,14 +33,18 @@ public class ContaServiceImpl implements ContaService {
         final var usuario = this.usuarioRepository.findById(contaBO.getUsuarioId())
                 .orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
 
-        final var contas = this.repository.findAllByUsuarioId(usuario.getId());
-        if (contas.stream().anyMatch(c -> c.getTipoSaldoConta().equals(contaBO.getTipoSaldoConta()))) {
+        final var existsContaWithTipoSaldoConta = this.repository.exists(
+                hasTipoSaldoConta(contaBO.getTipoSaldoConta())
+                        .and(hasUsuarioId(usuario.getId()))
+        );
+
+        if (existsContaWithTipoSaldoConta) {
             throw new ContaAlreadyExistsException("Já existe uma conta para este tipo de saldo e usuário");
         }
 
-        final var existsConta = this.repository.exists(hasNumeroConta(contaBO.getNumeroConta()));
+        final var existsContaWithNumeroConta = this.repository.exists(hasNumeroConta(contaBO.getNumeroConta()));
 
-        if (existsConta) {
+        if (existsContaWithNumeroConta) {
             throw new ContaAlreadyExistsException("Já existe uma conta com este número");
         }
 
